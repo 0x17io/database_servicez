@@ -1,14 +1,17 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from .models import account
+from .models import Account
 from django.contrib.auth.forms import AuthenticationForm
 
 # Create your views here.
 def index(response):
-    return render(response,template_name="homePage.html")#HttpResponse("Welcome to ServiceZ")
+    test = Account.objects.all()
+    return render(response, "homePage.html", {'contents': test})
+    #return render(response,template_name="homePage.html")
 
 def login(response):
-    contents = account.objects.all() # get all contents from account table
+    contents = Account.objects.all()
+
     return render(response, "loginPage.html", {'contents': contents})
 
 # Renee's part

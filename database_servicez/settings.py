@@ -33,7 +33,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'serviceZ',
+    'serviceZ.apps.ServicezConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
