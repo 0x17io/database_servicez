@@ -6,7 +6,7 @@ from django.db import models
 class Account (models.Model):
 
     # Main attributes
-    ID = models.IntegerField()
+    AccountID = models.IntegerField()
     FirstName = models.CharField(max_length=250)
     LastName = models.CharField(max_length=250)
     EmailAddr = models.CharField(max_length=250)
@@ -18,7 +18,7 @@ class Account (models.Model):
 class Background (models.Model):
 
     # Main attributes
-    ID = models.IntegerField()
+    BackgroundID = models.IntegerField()
     HasCharges = models.BooleanField()
     Charges = models.CharField(max_length=250)
 
@@ -38,7 +38,7 @@ class AdminRoles (models.Model):
 class Administrator (models.Model):
 
     # Main attributes
-    ID = models.IntegerField()
+    AdministratorID = models.IntegerField()
     RoleID = models.IntegerField()
 
     class Meta:
@@ -47,7 +47,7 @@ class Administrator (models.Model):
 class Clients (models.Model):
 
     # Main attributes
-    ID = models.IntegerField()
+    MainID = models.IntegerField()
     ClientID = models.IntegerField()
 
     class Meta:
@@ -56,7 +56,7 @@ class Clients (models.Model):
 class Contractors (models.Model):
 
     # Main attributes
-    ID = models.IntegerField()
+    MainID = models.IntegerField()
     ContractorID = models.IntegerField()
     ServiceID = models.IntegerField()
     Availability = models.BooleanField()
