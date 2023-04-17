@@ -7,11 +7,11 @@
     <link rel="stylesheet" href="{% static 'style.css' %}">
 </head>
 <body>
-  <h2>Dummy data asdfasd</h2>
-  {{% for info in contents %}}
-      {{ info.FirstName }}
-      <br>
-  {{% endfor %}}
+{#  <h2>Dummy data asdfasd</h2>#}
+{#  {{% for info in contents %}}#}
+{#      {{ info.FirstName }}#}
+{#      <br>#}
+{#  {{% endfor %}}#}
   <h2>Login</h2>
   <form method="post">
     {% csrf_token %}
