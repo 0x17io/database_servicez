@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="en">
     <head>
         <meta charset="utf-8" />
@@ -16,7 +17,7 @@
         <!-- SimpleLightbox plugin CSS-->
         <link href="https://cdnjs.cloudflare.com/ajax/libs/SimpleLightbox/2.1.0/simpleLightbox.min.css" rel="stylesheet" />
         <!-- Core theme CSS (includes Bootstrap)-->
-        <link href="css/styles.css" rel="stylesheet" />
+        <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
     </head>
     <body id="page-top">
         <!-- Navigation-->
@@ -26,10 +27,10 @@
                 <button class="navbar-toggler navbar-toggler-right" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ms-auto my-2 my-lg-0">
-                        <li class="nav-item"><a class="nav-link" href="home.html">Home</a></li>
-                        <li class="nav-item"><a class="nav-link" href="services.html">Services</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{%  url 'home' %}">Home</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{%  url 'services' %}">Services</a></li>
                         <li class="nav-item"><a class="nav-link" href="#search">Search</a></li>
-                        <li class="nav-item"><a class="nav-link" href="login.html">Log In</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'login'%}">Log In</a></li>
                     </ul>
                 </div>
             </div>
@@ -42,18 +43,24 @@
                         <h2 class="mt-0">Services</h2>
                         <hr class="divider" />
                         <p class="text-muted mb-5">List of available services</p>
+                        {% if all_contractors %}
+                        {% for contractor in all_contractors %}
                         <div class="card">
                         <div class="card-header">
-                            Service 1
+                            Service {{ forloop.counter }}
                           </div>
                           <div class="card-body">
-                            <h5 class="card-title">Contractor Name</h5>
-                            <p class="card-text"> Service type</p>
-                            <p class="card-text"> $50/hour</p>
+                            <h5 class="card-title">{{ contractor.MainID.FirstName }} {{ contractor.MainID.LastName }}</h5>
+                            <p class="card-text"> {{ contractor.ServiceID.TypeID.Type }} </p>
+                            <p class="card-text"> {{ contractor.ServiceID.Description }}</p>
+                            <p class="card-text"> ${{ contractor.ServiceID.Rate }}/hour</p>
                             <a href="contractor.html" class="btn btn-primary">More info</a>
                           </div>
                         </div>
-                        
+                        {% endfor %}
+                        {% else %}
+                        <p> there isn't anything here and there never was and there never will be and that is that and nothing more</p>
+                        {% endif %}
                     </div>
                     
                 </div>
@@ -71,7 +78,7 @@
         <!-- SimpleLightbox plugin JS-->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/SimpleLightbox/2.1.0/simpleLightbox.min.js"></script>
         <!-- Core theme JS-->
-        <script src="js/scripts.js"></script>
+        <script src="{% static 'js/scripts.js' %}"></script>
         <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
         <!-- * *                               SB Forms JS                               * *-->
         <!-- * * Activate your form at https://startbootstrap.com/solution/contact-forms * *-->

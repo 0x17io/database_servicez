@@ -25,7 +25,7 @@ class Background (models.Model):
     class Meta:
         db_table = "Background"
 
-class AdminRoles (models.Model):
+class AdminRole (models.Model):
 
     # main attributes
     RoleID = models.IntegerField()
@@ -44,61 +44,59 @@ class Administrator (models.Model):
     class Meta:
         db_table = "Administrator"
 
-class Clients (models.Model):
-
-    # Main attributes
-    MainID = models.IntegerField()
-    ClientID = models.IntegerField()
-
-    class Meta:
-        db_table = "Clients"
-
-class Contractors (models.Model):
-
-    # Main attributes
-    MainID = models.IntegerField()
-    ContractorID = models.IntegerField()
-    ServiceID = models.IntegerField()
-    Availability = models.BooleanField()
-
-    class Meta:
-        db_table = "Contractors"
-
-
-class Services (models.Model):
-    # Main attributes
-    ServiceID = models.IntegerField()
-    TypeID = models.IntegerField()
-    Description = models.CharField(max_length=250)
-    Rate = models.FloatField()
-
-    class Meta:
-        db_table = "Services"
-
-class ServiceTypes (models.Model):
+class ServiceType (models.Model):
     # Main attributes
     TypeID = models.IntegerField()
     Type = models.CharField(max_length=250)
 
     class Meta:
         db_table = "ServiceTypes"
+class Service (models.Model):
+    # Main attributes
+    ServiceID = models.IntegerField()
+    TypeID = models.ForeignKey(ServiceType, on_delete=models.CASCADE, db_column='TypeID')
+    Description = models.CharField(max_length=250)
+    Rate = models.FloatField()
 
-class Requests (models.Model):
+    class Meta:
+        db_table = "Services"
+
+class Client (models.Model):
+
+    # Main attributes
+    MainID = models.ForeignKey(Account, on_delete=models.CASCADE,db_column='MainID')
+    ClientID = models.IntegerField()
+
+    class Meta:
+        db_table = "Clients"
+
+class Contractor (models.Model):
+
+    # Main attributes
+    MainID = models.ForeignKey(Account, on_delete=models.CASCADE,db_column='MainID')
+    ContractorID = models.IntegerField()
+    ServiceID = models.ForeignKey(Service, on_delete=models.CASCADE,db_column='ServiceID')
+    Availability = models.BooleanField()
+
+    class Meta:
+        db_table = "Contractors"
+
+class Request (models.Model):
     # Main attributes
     RequestID = models.IntegerField()
-    ClientID = models.IntegerField()
-    ServiceID = models.IntegerField()
+    ClientID = models.ForeignKey(Client, on_delete=models.CASCADE, db_column='ClientID')
+    ServiceID = models.ForeignKey(Service, on_delete=models.CASCADE, db_column='ServiceID')
     Timestamp = models.DateTimeField()
 
     class Meta:
         db_table = "Requests"
 
 
-class Reviews (models.Model):
+class Review (models.Model):
     # Main attributes
     ReviewID = models.IntegerField()
-    ClientID = models.IntegerField()
-    ContractorID = models.IntegerField()
+    ClientID = models.ForeignKey(Client, on_delete=models.CASCADE, db_column='ClientID')
+    ContractorID = models.ForeignKey(Contractor, on_delete=models.CASCADE, db_column='ContractorID')
     Rating = models.IntegerField()
     Comment = models.CharField(max_length=250)
 
@@ -106,23 +104,23 @@ class Reviews (models.Model):
         db_table = "Reviews"
 
 
-class Transactions (models.Model):
+class Transaction (models.Model):
     # Main attributes
     TransID = models.IntegerField()
-    ClientID = models.IntegerField()
-    ContractorID = models.IntegerField()
+    ClientID = models.ForeignKey(Client, on_delete=models.CASCADE, db_column='ClientID')
+    ContractorID = models.ForeignKey(Contractor, on_delete=models.CASCADE, db_column='ContractorID')
     AmountPaid = models.FloatField()
     Timestamp = models.DateTimeField()
 
     class Meta:
         db_table = "Transactions"
 
-class Orders (models.Model):
+class Order (models.Model):
     # Main attributes
     OrderID = models.IntegerField()
-    ClientID = models.IntegerField()
-    ContractorID = models.IntegerField()
-    TransactionID = models.IntegerField()
+    ClientID = models.ForeignKey(Client, on_delete=models.CASCADE, db_column='ClientID')
+    ContractorID = models.ForeignKey(Contractor, on_delete=models.CASCADE, db_column='ContractorID')
+    TransactionID = models.ForeignKey(Transaction, on_delete=models.CASCADE, db_column='TransactionID')
     Timestamp = models.DateTimeField()
 
     class Meta:
