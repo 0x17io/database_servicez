@@ -29,3 +29,7 @@ class services(generic.ListView):
     # return render(response, "services.html", {'contents': all_services})
     #return render(response,template_name="homePage.html")
 
+class contractor(generic.DetailView):
+    model = Contractor
+    template_name = "contractor.html"
+    context_object_name = 'contractor_info'
