@@ -1,5 +1,4 @@
 from django import forms
-<<<<<<< HEAD
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 
@@ -48,9 +47,4 @@ class Meta:
 	fields = [
 	'username', 'email', 'first_name', 'last_name', 'password1', 'password2', 'check',
 	]
-=======
-from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.models import User
 
-print("hgello")
->>>>>>> 8148bbdfa6c5611f67fdee420ad5a97df1cf3e50
