@@ -83,8 +83,8 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'main_database',
         'USER': 'django_user',
-        'PASSWORD': 'hardpassword',
-        'HOST': '127.0.0.1',
+        'PASSWORD': 'Hardpassword!2',
+        'HOST': '18.222.119.170',
         'PORT': "3306",
         'OPTIONS': {
             'ssl': False
