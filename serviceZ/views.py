@@ -4,7 +4,7 @@ from django.views import generic
 from django.shortcuts import  render, redirect
 from django.contrib.auth import login
 from django.contrib import messages
-from .models import Account, Service, Contractor
+from .models import Account, Service, Contractor, Request
 from .forms import RegisterForm
 
 # Create your views here.
@@ -55,3 +55,7 @@ def register(request):
             return render(request, 'register_base.html', context)
 
     return render(request, 'register_base.html', {})
+
+def request(response):
+    test = Account.objects.all()
+    return render(response, "request_base.html", {'contents': test})
