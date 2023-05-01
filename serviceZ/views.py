@@ -4,7 +4,7 @@ from django.views import generic
 from django.shortcuts import  render, redirect
 from django.contrib.auth import login
 from django.contrib import messages
-from .models import Account, Service, Contractor, Request
+from .models import Account, Service, Contractor, Request, Review
 from .forms import RegisterForm
 
 # Create your views here.
@@ -35,6 +35,10 @@ class contractor(generic.DetailView):
     model = Contractor
     template_name = "contractor_base.html"
     context_object_name = 'contractor_info'
+
+def review(response):
+    test = Account.objects.all()
+    return render(response, "review_base.html", {'contents': test})
 
 def register(request):
     if request.method == 'GET':
