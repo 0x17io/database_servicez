@@ -57,5 +57,9 @@ def register(request):
     return render(request, 'register_base.html', {})
 
 def request(response):
-    test = Account.objects.all()
-    return render(response, "request_base.html", {'contents': test})
+    if True:
+        test = Account.objects.all()
+        return render(response, "request_base.html", {'contents': test})
+    else:        
+        test = Account.objects.all()
+        return render(response, "request_contractor_base.html", {'contents': test})        

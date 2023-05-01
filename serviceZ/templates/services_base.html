@@ -8,17 +8,17 @@
                         <h2 class="mt-0">Services</h2>
                         <hr class="divider" />
                         <p class="text-muted mb-5">List of available services</p>
-                        {% if all_services %}
-                        {% for service in all_services %}
+                        {% if all_contractors %}
+                        {% for contractor in all_contractors %}
                         <div class="card">
                         <div class="card-header">
                             Service {{ forloop.counter }}
                           </div>
                           <div class="card-body">
                             <h5 class="card-title">Contractor Name</h5>
-                            <p class="card-text"> Service type {{ service.TypeID }} </p>
-                            <p class="card-text"> ${{ service.Rate }}/hour</p>
-                            <a href="{%  url 'contractor' %}" class="btn btn-primary">More info</a>
+                            <p class="card-text"> Service type {{ contractor.service.TypeID }} </p>
+                            <p class="card-text"> ${{ contractor.service.Rate }}/hour</p>
+                            <a href="{%  url 'contractor' contractor.ContractorID %}" class="btn btn-primary"> {{contractor.ContractorID}} More info</a>
                           </div>
                         </div>
                         {% endfor %}
