@@ -15,10 +15,11 @@
                             Service {{ forloop.counter }}
                           </div>
                           <div class="card-body">
-                            <h5 class="card-title">Contractor Name</h5>
-                            <p class="card-text"> Service type {{ contractor.service.TypeID }} </p>
-                            <p class="card-text"> ${{ contractor.service.Rate }}/hour</p>
-                            <a href="{%  url 'contractor' contractor.ContractorID %}" class="btn btn-primary"> {{contractor.ContractorID}} More info</a>
+                            <h5 class="card-title">{{contractor.MainID.FirstName}}  {{contractor.MainID.LastName}}</h5>
+                            <p class="card-text"> {{ contractor.ServiceID.TypeID.Type }} </p>
+                            <p class="card-text"> {{ contractor.ServiceID.Description }} </p>
+                            <p class="card-text"> ${{ contractor.ServiceID.Rate }}/hour</p>
+                            <a href="{%  url 'contractor' contractor.ContractorID %}" class="btn btn-primary">More info</a>
                           </div>
                         </div>
                         {% endfor %}

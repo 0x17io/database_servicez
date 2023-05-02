@@ -31,10 +31,16 @@ class services(generic.ListView):
     # return render(response, "services.html", {'contents': all_services})
     #return render(response,template_name="homePage.html")
 
-class contractor(generic.DetailView):
-    model = Contractor
-    template_name = "contractor_base.html"
-    context_object_name = 'contractor_info'
+# class contractor(generic.DetailView):
+#     model = Contractor
+#     template_name = "contractor_base.html"
+#     context_object_name = 'contractor_info'
+
+def contractor(response, contractor_id):
+    contractor = Contractor.objects.filter(ContractorID=contractor_id)
+    reviews = Review.objects.filter(ContractorID=contractor[0].id) #filter(ContractorID=contractor_id)
+    return render(response, "contractor_base.html", {'contractor':contractor[0], 'reviews':reviews})
+    #return render(response,template_name="homePage.html")
 
 def review(response):
     test = Account.objects.all()
