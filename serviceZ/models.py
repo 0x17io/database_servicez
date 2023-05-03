@@ -11,7 +11,7 @@ from django.contrib.auth.models import AbstractUser
 
 class Account(AbstractUser):
 
-    # Main attributes
+    # Main attributes test
     id = models.AutoField(primary_key=True)
     #REQUIRED_FIELDS = ('mainAccount',)
     #USERNAME_FIELD = 'Username'
