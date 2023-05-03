@@ -85,7 +85,7 @@ DATABASES = {
         'NAME': 'main_database',
         'USER': 'django_user',
         'PASSWORD': 'Hardpassword!2',
-        'HOST': '18.191.90.63',
+        'HOST': '127.0.0.1',#'18.222.119.170',
         'PORT': "3306",
         'OPTIONS': {
             'ssl': False
@@ -139,4 +139,5 @@ STATICFILES_DIRS = [
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+AUTH_USER_MODEL = 'serviceZ.Account'
 

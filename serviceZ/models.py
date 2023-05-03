@@ -1,17 +1,33 @@
 from django.db import models
+from django.conf import settings
+#from django.contrib.auth.models import User
+#from django.contrib.auth.models import UserManager
+from django.contrib.auth.models import AbstractUser
+
+
 
 # Create your models here.
 
 
-class Account (models.Model):
+class Account(AbstractUser):
 
     # Main attributes
-    AccountID = models.IntegerField()
+    id = models.AutoField(primary_key=True)
+    #REQUIRED_FIELDS = ('mainAccount',)
+    #USERNAME_FIELD = 'Username'
+    is_anonymous = False
+    is_authenticated = True
+    #mainAccount = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    # AccountID = models.IntegerField()
+    #Username = models.CharField(max_length=250, unique=True)
     FirstName = models.CharField(max_length=250)
     LastName = models.CharField(max_length=250)
     EmailAddr = models.CharField(max_length=250)
-    Zipcode = models.IntegerField()
-    Language = models.CharField(max_length=250)
+
+    Zipcode = models.IntegerField(default=0)
+    Language = models.CharField(max_length=250, blank=True)
+    #
+    #objects = UserManager()
     class Meta:
         db_table = "Account"
 
