@@ -4,7 +4,7 @@ from django.views import generic
 from django.shortcuts import  render, redirect
 from django.contrib.auth import login
 from django.contrib import messages
-from .models import Account, Service, Contractor, Request, Review
+from .models import Account, Service, Contractor, Request, Review, Order
 from .forms import RegisterForm
 
 # Create your views here.
@@ -38,13 +38,26 @@ class services(generic.ListView):
 
 def contractor(response, contractor_id):
     contractor = Contractor.objects.filter(ContractorID=contractor_id)
-    reviews = Review.objects.filter(ContractorID=contractor[0].id) #filter(ContractorID=contractor_id)
+    reviews = Review.objects.all()
+    #reviews = Review.objects.filter(ContractorID=contractor[0].id) #filter(ContractorID=contractor_id)
     return render(response, "contractor_base.html", {'contractor':contractor[0], 'reviews':reviews})
     #return render(response,template_name="homePage.html")
 
 def review(response):
     test = Account.objects.all()
     return render(response, "review_base.html", {'contents': test})
+
+def add_review(request, client_id, contractor_id):
+    if request.method == 'POST':
+        rating = request.POST['rate']
+        text = request.POST['review_text']
+        review_id = Review.objects.all()[-1].ReviewID + 1
+        review = Review(ReviewID=review_id,ClientID=client_id,ContractorID=contractor_id,Rating=rating,Comment=text)
+        review.save()
+        return render(request, "contractor_base.html")
+    else:
+        return render(request, 'contractor_base.html')
+
 
 def register(request):
     if request.method == 'GET':
@@ -68,8 +81,13 @@ def register(request):
 
 def request(response):
     if True:
-        test = Account.objects.all()
+        test = Request.objects.all()
         return render(response, "request_base.html", {'contents': test})
     else:        
-        test = Account.objects.all()
+        test = Request.objects.all()
         return render(response, "request_contractor_base.html", {'contents': test})        
+
+def order(response):
+    if True:
+        test = Order.objects.all()
+        return render(response, "order_base.html", {'contents': test})

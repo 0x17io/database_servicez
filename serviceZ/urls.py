@@ -9,5 +9,7 @@ urlpatterns = [
     path("<int:contractor_id>/contractor/", views.contractor, name="contractor"),
     path("register", views.register, name="register"),
     path("request/", views.request, name="request"),
-    path("review/", views.review, name="review")
+    path("order/", views.order, name="order"),
+    path("review/", views.review, name="review"),
+    path("<int:contractor_id>/contractor/", views.add_review, name="add_review")
 ]
