@@ -53,7 +53,7 @@ class RegisterForm(UserCreationForm):
 
 	class Meta:
 		#objects = User #UserManager()
-		model = Account #settings.AUTH_USER_MODEL
+		model = Account #settings.AUTH_USER_MODEL done
 		fields = [
 		'username', 'email', 'first_name', 'last_name', 'password1', 'password2', 'check',
 		]
