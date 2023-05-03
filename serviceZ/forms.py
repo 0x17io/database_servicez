@@ -37,7 +37,7 @@ class RegisterForm(UserCreationForm):
 	help_text='Enter Username',
 	widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Username'}),
 	)
-	#zipcode = forms.IntegerField(required=True, max_value=99999,
+	#zipcode = forms.IntegerField(required=True, max_value=99999, # not working
 	#							 widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Zipcode'}))
 	password1 = forms.CharField(
 	help_text='Enter Password',
