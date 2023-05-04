@@ -12,7 +12,7 @@ from django.contrib.auth.models import AbstractUser
 class Account(AbstractUser):
 
     # Main attributes test
-    id = models.AutoField(primary_key=True)
+    #MainIDid = models.AutoField(primary_key=True)
     #REQUIRED_FIELDS = ('mainAccount',)
     #USERNAME_FIELD = 'Username'
     is_anonymous = False
@@ -34,7 +34,7 @@ class Account(AbstractUser):
 class Background (models.Model):
 
     # Main attributes
-    BackgroundID = models.IntegerField()
+    #BackgroundID =  models.AutoField(primary_key=True)
     HasCharges = models.BooleanField()
     Charges = models.CharField(max_length=250)
 
@@ -44,7 +44,7 @@ class Background (models.Model):
 class AdminRole (models.Model):
 
     # main attributes
-    RoleID = models.IntegerField()
+    #RoleID =  models.AutoField(primary_key=True)
     Type = models.CharField(max_length=250)
     Description = models.CharField(max_length=250)
 
@@ -54,7 +54,7 @@ class AdminRole (models.Model):
 class Administrator (models.Model):
 
     # Main attributes
-    AdministratorID = models.IntegerField()
+    #AdministratorID =  models.AutoField(primary_key=True)
     RoleID = models.IntegerField()
 
     class Meta:
@@ -62,14 +62,14 @@ class Administrator (models.Model):
 
 class ServiceType (models.Model):
     # Main attributes
-    TypeID = models.IntegerField()
+    #TypeID =  models.AutoField(primary_key=True)
     Type = models.CharField(max_length=250)
 
     class Meta:
         db_table = "ServiceTypes"
 class Service (models.Model):
     # Main attributes
-    ServiceID = models.IntegerField()
+    #ServiceID = models.AutoField(primary_key=True)
     TypeID = models.ForeignKey(ServiceType, on_delete=models.CASCADE, db_column='TypeID')
     Description = models.CharField(max_length=250)
     Rate = models.FloatField()
@@ -80,8 +80,9 @@ class Service (models.Model):
 class Client (models.Model):
 
     # Main attributes
+    #ClientID = models.AutoField(primary_key=True)
     MainID = models.ForeignKey(Account, on_delete=models.CASCADE,db_column='MainID')
-    ClientID = models.IntegerField()
+
 
     class Meta:
         db_table = "Clients"
@@ -89,8 +90,9 @@ class Client (models.Model):
 class Contractor (models.Model):
 
     # Main attributes
+    #ContractorID = models.AutoField(primary_key=True)
     MainID = models.ForeignKey(Account, on_delete=models.CASCADE,db_column='MainID')
-    ContractorID = models.IntegerField()
+
     ServiceID = models.ForeignKey(Service, on_delete=models.CASCADE,db_column='ServiceID')
     Availability = models.BooleanField()
 
@@ -99,7 +101,7 @@ class Contractor (models.Model):
 
 class Request (models.Model):
     # Main attributes
-    RequestID = models.IntegerField()
+    #RequestID = models.AutoField(primary_key=True)
     ClientID = models.ForeignKey(Client, on_delete=models.CASCADE, db_column='ClientID')
     ServiceID = models.ForeignKey(Service, on_delete=models.CASCADE, db_column='ServiceID')
     Timestamp = models.DateTimeField()
@@ -110,7 +112,7 @@ class Request (models.Model):
 
 class Review (models.Model):
     # Main attributes
-    ReviewID = models.IntegerField()
+    #ReviewID = models.AutoField(primary_key=True)
     ClientID = models.ForeignKey(Client, on_delete=models.CASCADE, db_column='ClientID')
     ContractorID = models.ForeignKey(Contractor, on_delete=models.CASCADE, db_column='ContractorID')
     Rating = models.IntegerField()
@@ -122,7 +124,7 @@ class Review (models.Model):
 
 class Transaction (models.Model):
     # Main attributes
-    TransID = models.IntegerField()
+    #TransID = models.AutoField(primary_key=True)
     ClientID = models.ForeignKey(Client, on_delete=models.CASCADE, db_column='ClientID')
     ContractorID = models.ForeignKey(Contractor, on_delete=models.CASCADE, db_column='ContractorID')
     AmountPaid = models.FloatField()
@@ -133,7 +135,7 @@ class Transaction (models.Model):
 
 class Order (models.Model):
     # Main attributes
-    OrderID = models.IntegerField()
+    #OrderID = models.AutoField(primary_key=True)
     ClientID = models.ForeignKey(Client, on_delete=models.CASCADE, db_column='ClientID')
     ContractorID = models.ForeignKey(Contractor, on_delete=models.CASCADE, db_column='ContractorID')
     TransactionID = models.ForeignKey(Transaction, on_delete=models.CASCADE, db_column='TransactionID')

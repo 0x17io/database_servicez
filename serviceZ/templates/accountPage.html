@@ -6,5 +6,14 @@
 </head>
 <body>
 
+    {% if contents.count > 1 %}
+    {% for item in contents %}
+        Your user name:{{ item.ClientID.MainID.username }}, the contractor: {{ item.ContractorID.MainID.username }},
+            comment {{ item.Comment }}
+        <br>
+    {% endfor %}
+    {% else %}
+        {{ contents }}
+    {% endif %}
 </body>
 </html>

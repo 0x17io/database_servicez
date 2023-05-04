@@ -2,10 +2,10 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.views import generic
 from django.shortcuts import  render, redirect
-from django.contrib.auth import login
 from django.contrib import messages
-from .models import Account, Service, Contractor, Request, Review, Order
+from .models import Account, Service, Contractor, Request, Review, Order, Client
 from .forms import RegisterForm
+from django.contrib.auth import authenticate, login
 
 # Create your views here.
 def index(response):
@@ -14,9 +14,9 @@ def index(response):
     #return render(response,template_name="homePage.html")
 
 
-def login(response):
+def loginCus(response):
     test = Account.objects.all()
-    return render(response, "login_base.html", {'contents': test})
+    return render(response, "accountPage.html", {'contents': test})
     #return render(response,template_name="homePage.html")
 
 class services(generic.ListView):
@@ -91,3 +91,38 @@ def order(response):
     if True:
         test = Order.objects.all()
         return render(response, "order_base.html", {'contents': test})
+
+def sign_in(request):
+    """
+    Sign in user.
+    :param request:
+    :return:
+    """
+    user = None
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(request, username=username, password=password)
+        print(user)
+    if user is not None:
+        if user.is_active:
+            login(request, user)
+            messages.success(request, ("worked!"))
+        return redirect("account_page") #accountPage.html", {})
+    else:
+        messages.success(request,("error dudeee"))
+        return render(request, "login_base.html", {})
+
+def helper_function (request):
+    """
+    Getting reviews for just the logged in user. Assume you only have 1 client ID per user.
+    :param request:
+    :return:
+    """
+    current_username = Account.objects.get(username=request.user).id
+
+    client_id = Client.objects.filter(MainID=current_username).values()[0]['id']
+
+    #Client.objects.filter(MainID=Account.objects.get(username="super_user").id).values()[0]['id']
+    all_reviews = Review.objects.filter(ClientID = client_id) #Review.objects.filter(ClientID = client_id)
+    return render(request, "accountPage.html", {'contents': all_reviews})
