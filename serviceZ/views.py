@@ -24,7 +24,7 @@ class services(generic.ListView):
     context_object_name = "all_contractors"
 
     def get_queryset(self):
-        return Contractor.objects.order_by("ContractorID")
+        return Contractor.objects.order_by("id")
 
     # all_services = Services
     # print(all_services)
@@ -37,9 +37,10 @@ class services(generic.ListView):
 #     context_object_name = 'contractor_info'
 
 def contractor(response, contractor_id):
-    contractor = Contractor.objects.filter(ContractorID=contractor_id)
+    contractor = Contractor.objects.filter(id=contractor_id)
     reviews = Review.objects.all()
     #reviews = Review.objects.filter(ContractorID=contractor[0].id) #filter(ContractorID=contractor_id)
+    #print(contractor[0].id, contractor[0].MainID.FirstName)
     return render(response, "contractor_base.html", {'contractor':contractor[0], 'reviews':reviews})
     #return render(response,template_name="homePage.html")
 

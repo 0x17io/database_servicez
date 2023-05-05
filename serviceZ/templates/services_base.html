@@ -19,7 +19,7 @@
                             <p class="card-text"> {{ contractor.ServiceID.TypeID.Type }} </p>
                             <p class="card-text"> {{ contractor.ServiceID.Description }} </p>
                             <p class="card-text"> ${{ contractor.ServiceID.Rate }}/hour</p>
-                            <a href="{%  url 'contractor' contractor.ContractorID %}" class="btn btn-primary">More info</a>
+                            <a href="{%  url 'contractor' contractor.id %}" class="btn btn-primary">More info</a>
                           </div>
                         </div>
                         {% endfor %}
