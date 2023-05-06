@@ -39,10 +39,9 @@ class services(generic.ListView):
 def contractor(response, contractor_id):
     contractor = Contractor.objects.filter(id=contractor_id)
     reviews = Review.objects.all()
-    #reviews = Review.objects.filter(ContractorID=contractor[0].id) #filter(ContractorID=contractor_id)
-    #print(contractor[0].id, contractor[0].MainID.FirstName)
-    return render(response, "contractor_base.html", {'contractor':contractor[0], 'reviews':reviews})
-    #return render(response,template_name="homePage.html")
+
+    return render(response, "contractor_base.html", {'contractor':contractor[0], 'reviews': reviews})
+
 
 def review(response):
     test = Account.objects.all()
@@ -62,14 +61,23 @@ def add_review(request, client_id, contractor_id):
 
 def register(request):
     if request.method == 'GET':
-        form  = RegisterForm()
+        form = RegisterForm()
         context = {'form': form}
         return render(request, 'register_base.html', context)
     if request.method == 'POST':
         form  = RegisterForm(request.POST)
         if form.is_valid():
+
             form.save()
+
+            latestRecord = Account.objects.get(username=request.POST['username'])
+            latestRecord.FirstName = request.POST['first_name']
+            latestRecord.LastName = request.POST['first_name']
+            latestRecord.EmailAddr = request.POST['email']
+            latestRecord.save()
+
             user = form.cleaned_data.get('username')
+
             messages.success(request, 'Account was created for ' + user)
             return redirect('home')
         else:
@@ -124,6 +132,7 @@ def helper_function (request):
 
     client_id = Client.objects.filter(MainID=current_username).values()[0]['id']
 
+    account_data = Account.objects.get(username=request.user)
     #Client.objects.filter(MainID=Account.objects.get(username="super_user").id).values()[0]['id']
     all_reviews = Review.objects.filter(ClientID = client_id) #Review.objects.filter(ClientID = client_id)
-    return render(request, "accountPage.html", {'contents': all_reviews})
+    return render(request, "accountPage.html", {'contents': all_reviews, 'current_user': account_data})

@@ -1,16 +1,6 @@
 from django import forms
-#from django.contrib.auth.models import User
-#from django.contrib.auth import get_user_model
-
-#User = get_user_model()
-
 from django.contrib.auth.forms import UserCreationForm
 from .models import Account
-#from django.contrib.auth.models import UserManager
-from django.conf import settings
-
-
-# Create your forms here.
 
 class RegisterForm(UserCreationForm):
 	email = forms.EmailField(
@@ -52,9 +42,9 @@ class RegisterForm(UserCreationForm):
 	check = forms.BooleanField(required = True)
 
 	class Meta:
-		#objects = User #UserManager()
-		model = Account #settings.AUTH_USER_MODEL done
+		model = Account
 		fields = [
 		'username', 'email', 'first_name', 'last_name', 'password1', 'password2', 'check',
 		]
+		print()
 
