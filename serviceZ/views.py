@@ -4,7 +4,7 @@ from django.views import generic
 from django.shortcuts import  render, redirect
 from django.contrib import messages
 from .models import Account, Service, Contractor, Request, Review, Order, Client
-from .forms import RegisterForm
+from .forms import RegisterForm, UpdateAccountForm
 from django.contrib.auth import authenticate, login
 
 # Create your views here.
@@ -65,14 +65,14 @@ def register(request):
         context = {'form': form}
         return render(request, 'register_base.html', context)
     if request.method == 'POST':
-        form  = RegisterForm(request.POST)
+        form = RegisterForm(request.POST)
         if form.is_valid():
 
             form.save()
 
             latestRecord = Account.objects.get(username=request.POST['username'])
             latestRecord.FirstName = request.POST['first_name']
-            latestRecord.LastName = request.POST['first_name']
+            latestRecord.LastName = request.POST['last_name']
             latestRecord.EmailAddr = request.POST['email']
             latestRecord.save()
 
@@ -136,3 +136,41 @@ def helper_function (request):
     #Client.objects.filter(MainID=Account.objects.get(username="super_user").id).values()[0]['id']
     all_reviews = Review.objects.filter(ClientID = client_id) #Review.objects.filter(ClientID = client_id)
     return render(request, "accountPage.html", {'contents': all_reviews, 'current_user': account_data})
+
+def load_account(request):
+    """
+    Loads account, additinoally allows you to updated the zipcode/language of the user.
+    :param request:
+    :return: Account Page
+    """
+
+    current_user_data = Account.objects.get(username=request.user)
+
+    if request.method == 'POST':
+        form = UpdateAccountForm(request.POST)
+
+        if form.is_valid():
+
+            currentRecord = Account.objects.get(username=current_user_data)
+            currentRecord.Zipcode = request.POST['Zipcode']
+            currentRecord.Language = request.POST['Language']
+            currentRecord.save()
+
+            messages.success(request, "Updated Account")
+
+            return redirect('account_page')
+
+        else:
+            print('Form is not valid')
+            messages.error(request, 'Error Processing Your Request')
+            context = {'form': form}
+            return render(request, 'accountPage.html', context)
+
+    else:
+        # Pull form when initially getting to page
+        form = UpdateAccountForm
+        print(current_user_data.username)
+        return render(request, "accountPage.html", {'content': current_user_data, 'form': form})
+
+    return render(request, 'accountPage.html', {'content': current_user_data, 'form': form})
+

@@ -11,5 +11,5 @@ urlpatterns = [
     path("order/", views.order, name="order"),
     path("review/", views.review, name="review"),
     path("<int:contractor_id>/contractor/", views.add_review, name="add_review"),
-    path("accountPage/", views.helper_function, name="account_page")
+    path("accountPage/", views.load_account, name="account_page"),
 ]

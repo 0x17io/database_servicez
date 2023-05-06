@@ -1,12 +1,11 @@
 {% extends "base.html" %}
 
 {% block content %}
+
     <br>
     <br>
     <br>
-    <br>
-    <br>
-    <br>
+    <p>Hello, {{content.FirstName}}. Welcome to ServiceZ</p>
 
           <section style="background-color: #eee;">
             <div class="container py-5">
@@ -21,27 +20,33 @@
                     <div class="card-body text-center">
                       <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp" alt="avatar"
                         class="rounded-circle img-fluid" style="width: 150px;">
-                      <h5 class="my-3">{{current_user.first_name}}  {{current_user.last_name}}</h5>
+                      <h5 class="my-3">{{content.FirstName}}  {{content.LastName}}</h5>
                       </div>
                     </div>
                   </div>
                 </div>
 
+    <p>Note that these are currently user settings on this account:
+    <ul>
+        <li>Username: {{ content.username }}</li>
+        <li>Email: {{ content.EmailAddr }}</li>
+        <li>First Name: {{ content.FirstName }}</li>
+        <li>Last Name: {{ content.LastName }}</li>
+        <li>Zipcode: {{ content.Zipcode }}</li>
+        <li>Lagnuage: {{ content.Language }}</li>
 
-    <br>
-    <br>
-    {{current_user.FirstName}}  {{current_user.last_name}} asdfasdfsdfasdf
-    <br>
-    {% if contents.count > 1 %}
-    {% for item in contents %}
-        <p>Your user name:{{ item.ClientID.MainID.username }}, the contractor: {{ item.ContractorID.MainID.username }},
-            comment {{ item.Comment }}
-        <br></p>
 
-    {% endfor %}
-    {% else %}
-        {{ contents }}
-    {% endif %}
+    </ul>
+    </p>
+    <br>
+    <br>
+    <p>Feel free to update zipcode and preferred language below: </p>
+<form method="post">
+    {% csrf_token %}
+    {{ form }}
+    <input type="submit" value="Submit">
+</form>
+    <br>
 
 {% endblock %}
 

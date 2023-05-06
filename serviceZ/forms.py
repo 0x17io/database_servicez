@@ -46,5 +46,8 @@ class RegisterForm(UserCreationForm):
 		fields = [
 		'username', 'email', 'first_name', 'last_name', 'password1', 'password2', 'check',
 		]
-		print()
+
+class UpdateAccountForm(forms.Form):
+	Zipcode = forms.IntegerField(label="zipcode", max_value=99999, min_value=0)
+	Language = forms.CharField(label="language", max_length=200)
 
