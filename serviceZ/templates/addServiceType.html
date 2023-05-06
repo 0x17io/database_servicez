@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <br>
+    <br>
+    <br>
+    <p>Add the particular service you want below: </p>
+
+        <form method="post">
+            {% csrf_token %}
+            {{ form }}
+            <input type="submit" value="Submit">
+        </form>
+
+    <br>
+    <br>
+    <p>Sometimes it takes a while for someone to pick up the service. Don't fret.</p>
+
+{% endblock %}
+

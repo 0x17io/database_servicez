@@ -3,8 +3,8 @@ from django.http import HttpResponse
 from django.views import generic
 from django.shortcuts import  render, redirect
 from django.contrib import messages
-from .models import Account, Service, Contractor, Request, Review, Order, Client
-from .forms import RegisterForm, UpdateAccountForm
+from .models import Account, Service, Contractor, Request, Review, Order, Client, ServiceType
+from .forms import RegisterForm, UpdateAccountForm, AddServiceForm
 from django.contrib.auth import authenticate, login
 
 # Create your views here.
@@ -111,16 +111,16 @@ def sign_in(request):
 
 def helper_function (request):
     """
-    Getting reviews for just the logged in user. Assume you only have 1 client ID per user.
+    Getting reviews for just the logged in user. Assume you only have 1 client ID per user. This is just to showcase
+    functionality.
     :param request:
     :return:
     """
     current_username = Account.objects.get(username=request.user).id
 
     client_id = Client.objects.filter(MainID=current_username).values()[0]['id']
-
     account_data = Account.objects.get(username=request.user)
-    #Client.objects.filter(MainID=Account.objects.get(username="super_user").id).values()[0]['id']
+
     all_reviews = Review.objects.filter(ClientID = client_id) #Review.objects.filter(ClientID = client_id)
     return render(request, "accountPage.html", {'contents': all_reviews, 'current_user': account_data})
 
@@ -159,4 +159,32 @@ def load_account(request):
         return render(request, "accountPage.html", {'content': current_user_data, 'form': form})
 
     return render(request, 'accountPage.html', {'content': current_user_data, 'form': form})
+def addService (request):
+    """
+    Add a service that a client is interested in.
+    :param request:
+    :return:
+    """
+    current_user_data = Account.objects.get(username=request.user)
 
+    if request.method == "POST":
+        form = AddServiceForm(request.POST)
+        print(form)
+        print("hiiii")
+
+        if form.is_valid():
+
+            ServiceType.objects.create(Type=request.POST['ServiceType'])
+
+            return redirect('account_page')
+        else:
+            print('Form is not valid')
+            messages.error(request, 'Error Processing Your Request')
+            context = {'form': form}
+            return render(request, 'addServiceType.html', context)
+    else:
+        form = AddServiceForm
+
+    return render(request, "addServiceType.html", {'content': current_user_data, 'form': form})
+
+    pass

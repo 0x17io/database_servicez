@@ -51,3 +51,6 @@ class UpdateAccountForm(forms.Form):
 	Zipcode = forms.IntegerField(label="zipcode", max_value=99999, min_value=0)
 	Language = forms.CharField(label="language", max_length=200)
 
+class AddServiceForm(forms.Form):
+	ServiceType = forms.CharField(label="Service Type", max_length=200)
+
