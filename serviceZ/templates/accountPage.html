@@ -1,19 +1,47 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Account page</title>
-</head>
-<body>
+{% extends "base.html" %}
 
+{% block content %}
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+
+          <section style="background-color: #eee;">
+            <div class="container py-5">
+              <div class="row">
+                <div class="col">
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-lg-4">
+                  <div class="card mb-4">
+                    <div class="card-body text-center">
+                      <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp" alt="avatar"
+                        class="rounded-circle img-fluid" style="width: 150px;">
+                      <h5 class="my-3">{{current_user.first_name}}  {{current_user.last_name}}</h5>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+
+    <br>
+    <br>
+    {{current_user.FirstName}}  {{current_user.last_name}} asdfasdfsdfasdf
+    <br>
     {% if contents.count > 1 %}
     {% for item in contents %}
-        Your user name:{{ item.ClientID.MainID.username }}, the contractor: {{ item.ContractorID.MainID.username }},
+        <p>Your user name:{{ item.ClientID.MainID.username }}, the contractor: {{ item.ContractorID.MainID.username }},
             comment {{ item.Comment }}
-        <br>
+        <br></p>
+
     {% endfor %}
     {% else %}
         {{ contents }}
     {% endif %}
-</body>
-</html>
+
+{% endblock %}
+
