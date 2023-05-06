@@ -169,8 +169,6 @@ def addService (request):
 
     if request.method == "POST":
         form = AddServiceForm(request.POST)
-        print(form)
-        print("hiiii")
 
         if form.is_valid():
 
