@@ -12,10 +12,6 @@ def index(response):
     test = Account.objects.all()
     return render(response, "home_base.html", {'contents': test})
 
-def loginCus(response):
-    test = Account.objects.all()
-    return render(response, "accountPage.html", {'contents': test})
-
 class services(generic.ListView):
     template_name = "services_base.html"
     context_object_name = "all_contractors"
