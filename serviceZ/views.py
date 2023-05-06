@@ -78,7 +78,7 @@ def register(request):
 
             user = form.cleaned_data.get('username')
 
-            messages.success(request, 'Account was created for ' + user)
+            messages.success(request, 'Account was created for the following user: ' + user)
             return redirect('home')
         else:
             print('Form is not valid')
