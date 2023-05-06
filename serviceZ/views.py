@@ -11,13 +11,10 @@ from django.contrib.auth import authenticate, login
 def index(response):
     test = Account.objects.all()
     return render(response, "home_base.html", {'contents': test})
-    #return render(response,template_name="homePage.html")
-
 
 def loginCus(response):
     test = Account.objects.all()
     return render(response, "accountPage.html", {'contents': test})
-    #return render(response,template_name="homePage.html")
 
 class services(generic.ListView):
     template_name = "services_base.html"
@@ -25,16 +22,6 @@ class services(generic.ListView):
 
     def get_queryset(self):
         return Contractor.objects.order_by("id")
-
-    # all_services = Services
-    # print(all_services)
-    # return render(response, "services.html", {'contents': all_services})
-    #return render(response,template_name="homePage.html")
-
-# class contractor(generic.DetailView):
-#     model = Contractor
-#     template_name = "contractor_base.html"
-#     context_object_name = 'contractor_info'
 
 def contractor(response, contractor_id):
     contractor = Contractor.objects.filter(id=contractor_id)
@@ -169,7 +156,6 @@ def load_account(request):
     else:
         # Pull form when initially getting to page
         form = UpdateAccountForm
-        print(current_user_data.username)
         return render(request, "accountPage.html", {'content': current_user_data, 'form': form})
 
     return render(request, 'accountPage.html', {'content': current_user_data, 'form': form})
