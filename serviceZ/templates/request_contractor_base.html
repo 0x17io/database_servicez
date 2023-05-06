@@ -6,14 +6,13 @@
             <div class="container px-4 px-lg-5">
                 <div class="row gx-4 gx-lg-5 justify-content-center">
                     <div class="col-lg-8 col-xl-6 text-center">
-                        <h2 class="mt-0">My requests</h2>
+                        <h2 class="mt-0">Requests</h2>
                         <hr class="divider" />
                         <p class="text-muted mb-5"></p>
                         {% if requests %}
                         {% for request in requests %}
                         <div class="card">
                           <div class="card-body">
-                            <h5 class="card-title">{{request.ClientID.MainId.FirstName}} {{request.ClientID.MainId.LastName}}</h5>
                             <p class="card-text"> {{request.ServiceID.TypeID.Type}}</p>
                             <p class="card-text"> {{request.Timestamp}} </p>
                             <a href="delete_request" class="btn btn-primary">Delete</a>
@@ -23,7 +22,6 @@
                         {% else %}
                         <p> there isn't anything here</p>
                         {% endif %}
-                        
                     </div>
                     
                 </div>

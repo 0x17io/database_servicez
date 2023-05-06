@@ -72,12 +72,18 @@ def register(request):
     return render(request, 'register_base.html', {})
 
 def request(response):
-    if True:
-        test = Request.objects.all()
-        return render(response, "request_base.html", {'contents': test})
+    #if client side list all requests client made
+    client_id=1
+    client_status = True
+    #contractor_status = True
+    if client_status:
+        requests = Request.objects.filter(ClientID=client_id)
+        return render(response, "request_base.html", {'requests': requests})
+    #if contractor side list all requests from all clients
     else:        
-        test = Request.objects.all()
-        return render(response, "request_contractor_base.html", {'contents': test})        
+        requests = Request.objects.all()
+        print(requests)
+        return render(response, "request_contractor_base.html", {'requests': requests})        
 
 def order(response):
     if True:
