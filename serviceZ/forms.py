@@ -67,4 +67,4 @@ class BecomeContractorForm(forms.Form):
 									  label="Type Of Work Intrested In", to_field_name='Description')
 
 class SearchBarForm(forms.Form):
-	searchBar = forms.CharField(label="Search Bar", max_length=200)
+	searchBar = forms.CharField(label="", max_length=200)
