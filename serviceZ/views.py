@@ -27,15 +27,13 @@ def index(response):
 
             service_as_list_of_tuples = list(service_type_id.values_list())
 
-            print([[x[2], list(typeID_to_name(x[1]))[0]['Type']] for x in service_as_list_of_tuples])
+            type = ServiceType.objects.filter(id__in=service_type_id).values_list('Type', flat=True)
 
-            #type = ServiceType.objects.filter(id__in=service_type_id.get()).values_list('Type', flat=True)
-
-
+            print(list(type))
             #print(service_type_id.)
-            # type = ServiceType.objects.filter(service__in=Service.objects
-            #                                   .filter(Description__contains=response.POST['searchBar'])
-            #                                   .values('TypeID')).values_list('Type', flat=True)
+            type = ServiceType.objects.filter(service__in=Service.objects
+                                              .filter(Description__contains=response.POST['searchBar'])
+                                              .values('TypeID')).values_list('Type')
 
             contractors = Contractor.objects.filter(ServiceID__in=Service.objects.
                                                     filter(Description__contains=response.POST['searchBar']))\
@@ -43,10 +41,14 @@ def index(response):
 
             #type = ", ".join(type)
             contractors_name_list = Account.objects.filter(id__in=contractors).values_list('username', flat=True)
-            print()
+
+            print(service_type_id.first().__dict__)
+            print(list(type))
             return render(response, "search_results.html", {'searchResults': service_type_id,
-                                                            #'serviceType': type,
-                                                            'contractors': contractors_name_list})
+                                                            'serviceType': type,
+                                                            'contractors': contractors_name_list,
+                                                            'test': zip(service_type_id, [str(x)[2:len(str(x))-3] for x in type])},
+                          )
         else:
             print('Form is not valid')
             context = {'form': form}

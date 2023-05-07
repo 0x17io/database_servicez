@@ -11,14 +11,14 @@
                         <hr class="divider" />
                         <p class="text-muted mb-5">List of available services.</p>
                         {% if searchResults %}
-                        {% for res in searchResults %}
+                        {% for res in test %}
                         <div class="card">
                         <div class="card-header">
                             Service {{ forloop.counter }}
                           </div>
                           <div class="card-body">
-                            <h5 class="card-title">Related Service Types: {{ res }}</h5>
-                            <p class="card-text">Description: {{ res.Description }} </p>
+                            <h5 class="card-title">Service (ID/Name): {{ res.0.TypeID_id }}/{{ res.1 }}</h5>
+                            <p class="card-text">Description: {{ res.0.Description }} </p>
                             <h7 class="card-title">Contractors</h7>
                               {% for cont in contractors %}
                                 <p class="card-text">{{ cont }} </p>
