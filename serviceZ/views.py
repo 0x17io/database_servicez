@@ -19,36 +19,40 @@ def index(response):
         form = SearchBarForm(response.POST)
 
         if form.is_valid():
-            #results = Service.objects.filter(Description__contains=)
 
-            #service_type_id = Service.objects.filter(Description__contains=response.POST['searchBar']).values_list('TypeID_id', flat=True)
+            service_type_id = Service.objects.filter(Description__contains=response.POST['searchBar'])
 
-            service_type_id = Service.objects.filter(Description__contains=response.POST['searchBar'])#.values_list('TypeID', 'Description')
 
-            service_as_list_of_tuples = list(service_type_id.values_list())
 
-            type = ServiceType.objects.filter(id__in=service_type_id).values_list('Type', flat=True)
-
-            print(list(type))
-            #print(service_type_id.)
             type = ServiceType.objects.filter(service__in=Service.objects
                                               .filter(Description__contains=response.POST['searchBar'])
-                                              .values('TypeID')).values_list('Type')
+                                              .values('TypeID')).values_list('service')
+
 
             contractors = Contractor.objects.filter(ServiceID__in=Service.objects.
                                                     filter(Description__contains=response.POST['searchBar']))\
-                .values_list('MainID', flat=True)
+                .values_list('MainID', 'ServiceID_id')
 
-            #type = ", ".join(type)
-            contractors_name_list = Account.objects.filter(id__in=contractors).values_list('username', flat=True)
+            print(contractors)
+            contractors = [[Account.objects.get(id=x[0]).username, Service.objects.get(id=x[1]).TypeID.Type,
+                            Service.objects.get(id=x[1]).Description, Service.objects.get(id=x[1]).Rate] for x in contractors]
+            print(contractors)
 
-            print(service_type_id.first().__dict__)
-            print(list(type))
-            return render(response, "search_results.html", {'searchResults': service_type_id,
-                                                            'serviceType': type,
-                                                            'contractors': contractors_name_list,
-                                                            'test': zip(service_type_id, [str(x)[2:len(str(x))-3] for x in type])},
-                          )
+            content = {}
+            for item in contractors:
+                if item[1] not in content.keys():
+                    print(item[0])
+                    content[item[1]] = {
+                        'contractors': [item[0]],
+                        'rate': item[3],
+                        'descr': item[2]
+                    }
+                else:
+                    if item[0] not in content[item[1]]['contractors']:
+                        content[item[1]]['contractors'].append(item[0])
+
+            print(content)
+            return render(response, "search_results.html", {'content': content})
         else:
             print('Form is not valid')
             context = {'form': form}

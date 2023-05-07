@@ -10,20 +10,20 @@
                         <h2 class="mt-0">Search Results</h2>
                         <hr class="divider" />
                         <p class="text-muted mb-5">List of available services.</p>
-                        {% if searchResults %}
-                        {% for res in test %}
+                        {% if content %}
+                        {% for key, value in content.items %}
                         <div class="card">
                         <div class="card-header">
                             Service {{ forloop.counter }}
                           </div>
                           <div class="card-body">
-                            <h5 class="card-title">Service (ID/Name): {{ res.0.TypeID_id }}/{{ res.1 }}</h5>
-                            <p class="card-text">Description: {{ res.0.Description }} </p>
+                            <h5 class="card-title">Service Name: {{ key }}</h5>
+                            <p class="card-text">Description: {{ value.descr }} </p>
                             <h7 class="card-title">Contractors</h7>
-                              {% for cont in contractors %}
+                              {% for cont in value.contractors %}
                                 <p class="card-text">{{ cont }} </p>
                               {% endfor %}
-                            <p class="card-text"> ${{ res.Rate }}/hour</p>
+                            <p class="card-text"> ${{ value.rate }}/hour</p>
 {#                            <a href="{%  url 'contractor' contractor.id %}" class="btn btn-primary">More info</a>#}
                           </div>
                         </div>
