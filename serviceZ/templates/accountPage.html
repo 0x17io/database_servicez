@@ -21,6 +21,14 @@
                       <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp" alt="avatar"
                         class="rounded-circle img-fluid" style="width: 150px;">
                       <h5 class="my-3">{{content.FirstName}}  {{content.LastName}}</h5>
+                        <h3 class="my-sm-2">
+                             {% if content.id in clientInfo %}
+                                <p>Client</p>
+                            {% endif %}
+                            {% if content.id in contractorInfo %}
+                                 <p>Contractor </p>
+                            {% endif %}
+                        </h3>
                       </div>
                     </div>
                   </div>
@@ -49,6 +57,24 @@
 
     <br>
     <p>Want a particular service that can't be found in <a href={% url 'services' %}>Services</a> ? Then click here <a href={% url 'add_service_types' %}>Services</a>. </p>
+
+
+    <br>
+    <br>
+    {% if content.id not in clientInfo %}
+    <p>Click here  to become a <a href={% url 'become_client' %}>Client</a>.  </p>
+    {% endif %}
+
+    <br>
+    <br>
+    {% if content.id not in contractorInfo %}
+    <p>Click here  to become a <a href={% url 'become_contractor' %}>Contractor</a>.  </p>
+    {% endif %}
+
+
+
+
+
 
 {% endblock %}
 

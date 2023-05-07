@@ -1,6 +1,10 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
-from .models import Account
+from .models import Account, ServiceType, Service
+
+#SERVICETYPE_CHOICES = tuple(Service.objects.all().values_list())
+
+
 
 class RegisterForm(UserCreationForm):
 	email = forms.EmailField(
@@ -53,4 +57,12 @@ class UpdateAccountForm(forms.Form):
 
 class AddServiceForm(forms.Form):
 	ServiceType = forms.CharField(label="Service Type", max_length=200)
+
+class BecomeClientForm(forms.Form):
+	clientButton = forms.BooleanField(label="Client Button")
+
+
+class BecomeContractorForm(forms.Form):
+	Job_Menu = forms.ModelChoiceField(queryset=Service.objects.all(),
+									  label="Type Of Work Intrested In", to_field_name='Description')
 

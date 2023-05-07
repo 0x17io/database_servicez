@@ -5,17 +5,17 @@
     <br>
     <br>
     <br>
-    <p>Everyone can be a client. Confirm below if you would like to be a client: </p>
+    <p>If you're trying to earn some extra cash as a contractor, please fill out the below form.</p>
 
-{#        <form method="post">#}
-{#            {% csrf_token %}#}
-{#            {{ form }}#}
-{#            <input type="submit" value="Submit">#}
-{#        </form>#}
+        <form method="POST">
+            {% csrf_token %}
+            {{ form }}
+            <input type="submit" value="Submit">
+        </form>
 
     <br>
     <br>
-    <p>Want to make some extra cash? If you would like to become a contractor, please visit our contractor page. </p>
+    <p>Best of luck!</p>
 
 {% endblock %}
 

@@ -75,9 +75,9 @@ class Contractor (models.Model):
 
     # Main attributes
     #ContractorID = models.AutoField(primary_key=True)
-    MainID = models.ForeignKey(Account, on_delete=models.CASCADE,db_column='MainID')
+    MainID = models.ForeignKey(Account, on_delete=models.CASCADE, db_column='MainID')
 
-    ServiceID = models.ForeignKey(Service, on_delete=models.CASCADE,db_column='ServiceID')
+    ServiceID = models.ForeignKey(Service, on_delete=models.CASCADE, db_column='ServiceID')
     Availability = models.BooleanField()
 
     class Meta:

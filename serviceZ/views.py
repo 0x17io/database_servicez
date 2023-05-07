@@ -4,7 +4,7 @@ from django.views import generic
 from django.shortcuts import  render, redirect
 from django.contrib import messages
 from .models import Account, Service, Contractor, Request, Review, Order, Client, ServiceType
-from .forms import RegisterForm, UpdateAccountForm, AddServiceForm
+from .forms import RegisterForm, UpdateAccountForm, AddServiceForm, BecomeContractorForm, BecomeClientForm
 from django.contrib.auth import authenticate, login
 
 # Create your views here.
@@ -134,6 +134,9 @@ def load_account(request):
     """
 
     current_user_data = Account.objects.get(username=request.user)
+    client_main_ids = Client.objects.all().values_list('MainID', flat=True)
+    conntractor_main_ids = Contractor.objects.all().values_list('MainID', flat=True)
+
 
     if request.method == 'POST':
         form = UpdateAccountForm(request.POST)
@@ -158,9 +161,11 @@ def load_account(request):
     else:
         # Pull form when initially getting to page
         form = UpdateAccountForm
-        return render(request, "accountPage.html", {'content': current_user_data, 'form': form})
+        return render(request, "accountPage.html", {'content': current_user_data, 'form': form,
+                                                    'clientInfo': client_main_ids, 'contractorInfo': conntractor_main_ids})
 
-    return render(request, 'accountPage.html', {'content': current_user_data, 'form': form})
+    return render(request, "accountPage.html", {'content': current_user_data, 'form': form,
+                                                'clientInfo': client_main_ids, 'contractorInfo': conntractor_main_ids})
 def addService (request):
     """
     Add a service that a client is interested in.
@@ -187,4 +192,57 @@ def addService (request):
 
     return render(request, "addServiceType.html", {'content': current_user_data, 'form': form})
 
-    pass
+def become_client(request):
+    """
+    Confirm that you would like to become a client.
+    :param request:
+    :return:
+    """
+    current_user_data = Account.objects.get(username=request.user)
+
+    if request.method == "POST":
+        form = BecomeClientForm(request.POST)
+
+        if form.is_valid():
+
+            Client.objects.create(MainID=request.user)
+            print("made it?")
+
+            return redirect('account_page')
+        else:
+            print('Form is not valid')
+            context = {'form': form}
+            return render(request, 'become_client.html', context)
+    else:
+        form = BecomeClientForm
+
+    return render(request, "become_client.html", {'content': current_user_data, 'form': form})
+
+
+def become_contractor(request):
+    """
+    Become a contractor!
+    :param request:
+    :return:
+    """
+    current_user_data = Account.objects.get(username=request.user)
+
+    if request.method == "POST":
+        form = BecomeContractorForm(request.POST)
+
+        if form.is_valid():
+            print("ehaksjdhflakjsdhfk")
+            print(request.POST['Job_Menu'])
+            Contractor.objects.create(MainID=request.user, ServiceID=Service.objects.get(Description=request.POST['Job_Menu']),
+                                      Availability=True)
+
+
+            return redirect('account_page')
+        else:
+            print('Form is not valid')
+            context = {'form': form}
+            return render(request, 'become_contractor.html', context)
+    else:
+        form = BecomeContractorForm
+
+    return render(request, "become_contractor.html", {'content': current_user_data, 'form': form})
