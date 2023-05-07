@@ -51,7 +51,6 @@ def index(response):
                     if item[0] not in content[item[1]]['contractors']:
                         content[item[1]]['contractors'].append(item[0])
 
-            print(content)
             return render(response, "search_results.html", {'content': content})
         else:
             print('Form is not valid')
