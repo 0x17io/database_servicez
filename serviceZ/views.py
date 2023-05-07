@@ -96,21 +96,52 @@ def register(request):
 def request(response):
     #if client side list all requests client made
     client_id=1
+    contractor_id=-1
     client_status = True
     #contractor_status = True
+    current_user = Account.objects.filter(username=response.user)
+    if current_user:
+        if client_status:
+            client_id = Client.objects.filter(MainID=current_user[0].pk)[0]
+        else:
+            contractor_id = Contractor.objects.filter(MainID=current_user[0].pk)[0]
+
     if client_status:
         requests = Request.objects.filter(ClientID=client_id)
+
+        print("The requests for client id",client_id,'are',requests)
+
         return render(response, "request_base.html", {'requests': requests})
     #if contractor side list all requests from all clients
     else:        
         requests = Request.objects.all()
-        print(requests)
+        print("Requests for contractor id",client_id," : ",requests)
         return render(response, "request_contractor_base.html", {'requests': requests})        
 
 def order(response):
-    if True:
-        test = Order.objects.all()
-        return render(response, "order_base.html", {'contents': test})
+    #if client side list all orders client made
+    client_id=1
+    contractor_id=-1
+    client_status = True
+    current_user = Account.objects.filter(username=response.user)
+    if current_user:
+        if client_status:
+            client_id = Client.objects.filter(MainID=current_user[0].pk)[0]
+        else:
+            contractor_id = Contractor.objects.filter(MainID=current_user[0].pk)[0]
+
+    #contractor_status = True
+    if client_status:
+        orders = Order.objects.filter(ClientID=client_id)
+        
+        print("The orders for client id",client_id,'are',orders)
+
+        return render(response, "order_base.html", {'orders': orders})
+    #if contractor side list all orders from all clients
+    else:        
+        orders = Order.objects.filter(ContractorID=contractor_id)
+        print(orders)
+        return render(response, "order_contractor_base.html", {'requests': orders})        
 
 def sign_in(request):
     """

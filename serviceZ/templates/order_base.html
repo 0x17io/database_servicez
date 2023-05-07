@@ -1,21 +1,21 @@
 {% extends "base.html" %}
 
 {% block content %}
-        <!-- Request -->
-         <section class="page-section" id="request">
+        <!-- Order -->
+         <section class="page-section" id="order">
             <div class="container px-4 px-lg-5">
                 <div class="row gx-4 gx-lg-5 justify-content-center">
                     <div class="col-lg-8 col-xl-6 text-center">
-                        <h2 class="mt-0">My requests</h2>
+                        <h2 class="mt-0">My Orders</h2>
                         <hr class="divider" />
                         <p class="text-muted mb-5"></p>
-                        {% if requests %}
-                        {% for request in requests %}
+                        {% if orders %}
+                        {% for order in orders %}
                         <div class="card">
                           <div class="card-body">
-                            <h5 class="card-title">{{request.ClientID.MainId.FirstName}} {{request.ClientID.MainId.LastName}}</h5>
-                            <p class="card-text"> {{request.ServiceID.TypeID.Type}}</p>
-                            <p class="card-text"> {{request.Timestamp}} </p>
+                            <h5 class="card-title">{{order.ClientID.MainID.FirstName}} {{order.ClientID.MainID.LastName}}</h5>
+                            {% comment %} <p class="card-text"> {{order.ServiceID.TypeID.Type}}</p> {% endcomment %}
+                            <p class="card-text"> {{order.Timestamp}} </p>
                             <a href="delete_request" class="btn btn-primary">Delete</a>
                           </div>
                         </div>
