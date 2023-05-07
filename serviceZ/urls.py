@@ -15,4 +15,5 @@ urlpatterns = [
     path("addServiceTypes/", views.addService, name="add_service_types"),
     path("becomeClient/", views.become_client, name="become_client"),
     path("becomeContractor/", views.become_contractor, name="become_contractor"),
+    path("searchResults/", views.index, name="search_results"),
 ]

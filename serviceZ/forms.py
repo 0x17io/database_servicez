@@ -66,3 +66,5 @@ class BecomeContractorForm(forms.Form):
 	Job_Menu = forms.ModelChoiceField(queryset=Service.objects.all().values_list('Description', flat=True),
 									  label="Type Of Work Intrested In", to_field_name='Description')
 
+class SearchBarForm(forms.Form):
+	searchBar = forms.CharField(label="Search Bar", max_length=200)

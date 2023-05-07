@@ -5,7 +5,7 @@
 */
 //
 // Scripts
-// Teeeeeeeeeeeeeeeeeeeest
+//
 
 window.addEventListener('DOMContentLoaded', event => {
 

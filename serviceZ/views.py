@@ -4,13 +4,35 @@ from django.views import generic
 from django.shortcuts import  render, redirect
 from django.contrib import messages
 from .models import Account, Service, Contractor, Request, Review, Order, Client, ServiceType
-from .forms import RegisterForm, UpdateAccountForm, AddServiceForm, BecomeContractorForm, BecomeClientForm
+from .forms import RegisterForm, UpdateAccountForm, AddServiceForm, BecomeContractorForm, BecomeClientForm, SearchBarForm
 from django.contrib.auth import authenticate, login
+from django.views.generic import TemplateView, ListView
 
 # Create your views here.
 def index(response):
-    test = Account.objects.all()
-    return render(response, "home_base.html", {'contents': test})
+    """
+    Landing/Search Page
+    :param response:
+    :return:
+    """
+    if response.method == "POST":
+        form = SearchBarForm(response.POST)
+
+        if form.is_valid():
+            results = Service.objects.filter(Description__contains=response.POST['searchBar'])
+            contractors = Contractor.objects.all()
+            print(results)
+            #return redirect('account_page')
+
+            return render(response, "search_results.html", {'searchResults': results, 'contractors': contractors})
+        else:
+            print('Form is not valid')
+            context = {'form': form}
+            render(response, "home_base.html", {'form': form})
+    else:
+        form = SearchBarForm
+
+    return render(response, "home_base.html", {'form': form})
 
 class services(generic.ListView):
     template_name = "services_base.html"
@@ -231,8 +253,6 @@ def become_contractor(request):
         form = BecomeContractorForm(request.POST)
 
         if form.is_valid():
-            print("ehaksjdhflakjsdhfk")
-            print(request.POST['Job_Menu'])
             Contractor.objects.create(MainID=request.user, ServiceID=Service.objects.get(Description=request.POST['Job_Menu']),
                                       Availability=True)
 
