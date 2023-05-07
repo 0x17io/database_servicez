@@ -63,6 +63,11 @@ class BecomeClientForm(forms.Form):
 
 
 class BecomeContractorForm(forms.Form):
-	Job_Menu = forms.ModelChoiceField(queryset=Service.objects.all(),
+	Job_Menu = forms.ModelChoiceField(queryset=Service.objects.all().values_list('Description', flat=True),
 									  label="Type Of Work Intrested In", to_field_name='Description')
-
+	#
+	# def __init__(self, *args, **kwargs):
+	# 	super(BecomeContractorForm, self).__init__(*args, **kwargs)
+	# 	# without the next line label_from_instance does NOT work
+	# 	#self.fields['user'].queryset = User.objects.all()
+	# 	self.fields['Description'].label_from_instance = lambda obj: "%s" % (obj.Description)
