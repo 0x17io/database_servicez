@@ -4,7 +4,7 @@ from django.views import generic
 from django.shortcuts import  render, redirect
 from django.contrib import messages
 from .models import Account, Service, Contractor, Request, Review, Order, Client, ServiceType
-from .forms import RegisterForm, UpdateAccountForm, AddServiceForm, BecomeContractorForm, BecomeClientForm, SearchBarForm
+from .forms import RegisterForm, UpdateAccountForm, AddServiceForm, BecomeContractorForm, BecomeClientForm, SearchBarForm, WriteReviewForm
 from django.contrib.auth import authenticate, login
 from django.views.generic import TemplateView, ListView
 
@@ -70,26 +70,35 @@ class services(generic.ListView):
 
 def contractor(response, contractor_id):
     contractor = Contractor.objects.filter(id=contractor_id)
+    form = WriteReviewForm
     print(contractor)
-    reviews = Review.objects.all().filter(ContractorID=contractor_id)
+    print(response.method)
 
-    return render(response, "contractor_base.html", {'contractor':contractor[0], 'reviews': reviews})
+    reviews = Review.objects.all().filter(ContractorID=contractor_id)
+    if response.method == 'POST':
+        print(contractor)
+        print(response.method[0])
+    return render(response, "contractor_base.html", {'contractor':contractor[0], 'reviews': reviews, 'form':form})
 
 
 def review(response):
     test = Account.objects.all()
     return render(response, "review_base.html", {'contents': test})
 
-def add_review(request, client_id, contractor_id):
-    if request.method == 'POST':
-        rating = request.POST['rate']
-        text = request.POST['review_text']
-        review_id = Review.objects.all()[-1].ReviewID + 1
-        review = Review(ReviewID=review_id,ClientID=client_id,ContractorID=contractor_id,Rating=rating,Comment=text)
-        review.save()
-        return render(request, "contractor_base.html")
-    else:
-        return render(request, 'contractor_base.html')
+def add_review(client_id, contractor_id):
+    """
+    Add review, based on request.id, client, and contractor
+    :param request:
+    :param client_id:
+    :param contractor_id:
+    :return:
+    """
+    rating = request.POST['rate']
+    text = request.POST['review_text']
+    review_id = Review.objects.all()[-1].ReviewID + 1
+    review = Review(ReviewID=review_id, ClientID=client_id, ContractorID=contractor_id, Rating=rating, Comment=text)
+    review.save()
+
 
 
 def register(request):

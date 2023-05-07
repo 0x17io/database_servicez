@@ -68,3 +68,7 @@ class BecomeContractorForm(forms.Form):
 
 class SearchBarForm(forms.Form):
 	searchBar = forms.CharField(label="", max_length=200)
+
+class WriteReviewForm(forms.Form):
+	rate = forms.IntegerField(label="Rate the services.", max_value=5, min_value=1)
+	feedback = forms.CharField(label="Write your feedback.", max_length=200)
