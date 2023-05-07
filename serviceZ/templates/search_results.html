@@ -9,7 +9,7 @@
                     <div class="col-lg-8 col-xl-6 text-center">
                         <h2 class="mt-0">Search Results</h2>
                         <hr class="divider" />
-                        <p class="text-muted mb-5">List of available services {{ searchResults }}</p>
+                        <p class="text-muted mb-5">List of available services.</p>
                         {% if searchResults %}
                         {% for res in searchResults %}
                         <div class="card">
@@ -17,9 +17,12 @@
                             Service {{ forloop.counter }}
                           </div>
                           <div class="card-body">
-                            <h5 class="card-title">{{res.id}} / {{res.TypeID}}</h5>
-                            <p class="card-text"> {{ res.Description }} </p>
-{#                            <p class="card-text"> {{ contractors.filter(ServiceID=res.id) }} </p>#}
+                            <h5 class="card-title">Related Service Types: {{ res }}</h5>
+                            <p class="card-text">Description: {{ res.Description }} </p>
+                            <h7 class="card-title">Contractors</h7>
+                              {% for cont in contractors %}
+                                <p class="card-text">{{ cont }} </p>
+                              {% endfor %}
                             <p class="card-text"> ${{ res.Rate }}/hour</p>
 {#                            <a href="{%  url 'contractor' contractor.id %}" class="btn btn-primary">More info</a>#}
                           </div>
@@ -29,11 +32,13 @@
                         <p> No results found. Try searching in the home page one more time.</p>
                         {% endif %}
                     </div>
-                    
+
                 </div>
 
 
             </div>
 
         </section>
+
+
 {% endblock %}
