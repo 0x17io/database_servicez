@@ -19,12 +19,34 @@ def index(response):
         form = SearchBarForm(response.POST)
 
         if form.is_valid():
-            results = Service.objects.filter(Description__contains=response.POST['searchBar'])
-            contractors = Contractor.objects.all()
-            print(results)
-            #return redirect('account_page')
+            #results = Service.objects.filter(Description__contains=)
 
-            return render(response, "search_results.html", {'searchResults': results, 'contractors': contractors})
+            #service_type_id = Service.objects.filter(Description__contains=response.POST['searchBar']).values_list('TypeID_id', flat=True)
+
+            service_type_id = Service.objects.filter(Description__contains=response.POST['searchBar'])#.values_list('TypeID', 'Description')
+
+            service_as_list_of_tuples = list(service_type_id.values_list())
+
+            print([[x[2], list(typeID_to_name(x[1]))[0]['Type']] for x in service_as_list_of_tuples])
+
+            #type = ServiceType.objects.filter(id__in=service_type_id.get()).values_list('Type', flat=True)
+
+
+            #print(service_type_id.)
+            # type = ServiceType.objects.filter(service__in=Service.objects
+            #                                   .filter(Description__contains=response.POST['searchBar'])
+            #                                   .values('TypeID')).values_list('Type', flat=True)
+
+            contractors = Contractor.objects.filter(ServiceID__in=Service.objects.
+                                                    filter(Description__contains=response.POST['searchBar']))\
+                .values_list('MainID', flat=True)
+
+            #type = ", ".join(type)
+            contractors_name_list = Account.objects.filter(id__in=contractors).values_list('username', flat=True)
+            print()
+            return render(response, "search_results.html", {'searchResults': service_type_id,
+                                                            #'serviceType': type,
+                                                            'contractors': contractors_name_list})
         else:
             print('Form is not valid')
             context = {'form': form}
@@ -43,7 +65,8 @@ class services(generic.ListView):
 
 def contractor(response, contractor_id):
     contractor = Contractor.objects.filter(id=contractor_id)
-    reviews = Review.objects.all()
+    print(contractor)
+    reviews = Review.objects.all().filter(ContractorID=contractor_id)
 
     return render(response, "contractor_base.html", {'contractor':contractor[0], 'reviews': reviews})
 
@@ -297,3 +320,13 @@ def become_contractor(request):
         form = BecomeContractorForm
 
     return render(request, "become_contractor.html", {'content': current_user_data, 'form': form})
+
+def typeID_to_name(num):
+    """
+    Helper function, extract servicetype name.
+    :param num:
+    :return:
+    """
+    serv_helper = ServiceType.objects.filter(id=num).values_list('Type', flat=True)
+    serv_helper = serv_helper.first().Type
+    return serv_helper
