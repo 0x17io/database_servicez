@@ -356,7 +356,7 @@ def become_contractor(request):
 
             #print()
             Test = Service.objects.create(TypeID=ServiceType.objects.get(id=request.POST['service_type_id']),
-                                   Description=request.POST['service_type_id'],
+                                   Description=request.POST['description'],
                                    Rate=request.POST['rate'])
 
             Contractor.objects.create(MainID=current_user_data, ServiceID=Service.objects.get(id=Test.id),
