@@ -20,10 +20,6 @@ def index(response):
 
         if form.is_valid():
 
-            service_type_id = Service.objects.filter(Description__contains=response.POST['searchBar'])
-
-
-
             type = ServiceType.objects.filter(service__in=Service.objects
                                               .filter(Description__contains=response.POST['searchBar'])
                                               .values('TypeID')).values_list('service')
@@ -69,16 +65,25 @@ class services(generic.ListView):
         return Contractor.objects.order_by("id")
 
 def contractor(response, contractor_id):
+    current_user = response.user
+
     contractor = Contractor.objects.filter(id=contractor_id)
-    form = WriteReviewForm
-    print(contractor)
-    print(response.method)
+
+    form = WriteReviewForm(response.POST)
+
 
     reviews = Review.objects.all().filter(ContractorID=contractor_id)
     if response.method == 'POST':
-        print(contractor)
-        print(response.method[0])
-    return render(response, "contractor_base.html", {'contractor':contractor[0], 'reviews': reviews, 'form':form})
+
+        main_id = Account.objects.get(username=current_user).id
+
+        Review.objects.create(ClientID=Client.objects.filter(MainID_id=main_id).first(),
+                               ContractorID=Contractor.objects.filter(id=contractor_id).first(),
+                               Rating=response.POST['rating'],
+                               Comment=response.POST['actual_review'])
+
+        return render(response, "contractor_base.html", {'contractor':contractor[0], 'reviews': reviews, 'form': form})
+    return render(response, "contractor_base.html", {'contractor': contractor[0], 'reviews': reviews, 'form': form})
 
 
 def review(response):
