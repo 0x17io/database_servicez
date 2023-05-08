@@ -354,7 +354,7 @@ def become_contractor(request):
 
         if form.is_valid():
 
-            #print()
+            print()
             Test = Service.objects.create(TypeID=ServiceType.objects.get(id=request.POST['service_type_id']),
                                    Description=request.POST['description'],
                                    Rate=request.POST['rate'])

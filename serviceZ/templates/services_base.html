@@ -12,7 +12,7 @@
                         {% if all_contractors %}
 
 
-                        {% for contractor in all_contractors %}
+                        {% for contractor in all_contractors %}a
                         <div class="card">
                         <div class="card-header">
                             Service {{ forloop.counter }}
@@ -20,7 +20,7 @@
                           <div class="card-body">
                             <h5 class="card-title">{{contractor.MainID.FirstName}}  {{contractor.MainID.LastName}}</h5>
                             <p class="card-text"> {{ contractor.ServiceID.TypeID.Type }} </p>
-                            <p class="card-text"> {{ contractor.ServiceID.Description.Description }} </p>
+                            <p class="card-text"> {{ contractor.ServiceID.Description }} </p>
                             <p class="card-text"> ${{ contractor.ServiceID.Rate }}/hour</p>
                             <a type="button" class="btn btn-primary" href="{%  url 'make_request' contractor.ServiceID.id %}">Request</a>
                             <a href="{%  url 'contractor' contractor.id %}" class="btn btn-primary">More info</a>
