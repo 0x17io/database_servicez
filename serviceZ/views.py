@@ -130,7 +130,9 @@ def register(request):
 
     return render(request, 'register_base.html', {})
 
+
 def request(response):
+
     #if client side list all requests client made
     client_id=1
     contractor_id=-1
@@ -155,6 +157,10 @@ def request(response):
         print("Requests for contractor id",client_id," : ",requests)
         return render(response, "request_contractor_base.html", {'requests': requests})        
 
+def delete_request(response, request_id):
+    Request.objects.get(pk=request_id).delete()
+    return redirect("request")       
+
 def order(response):
     #if client side list all orders client made
     client_id=1
@@ -178,7 +184,11 @@ def order(response):
     else:        
         orders = Order.objects.filter(ContractorID=contractor_id)
         print(orders)
-        return render(response, "order_contractor_base.html", {'requests': orders})        
+        return render(response, "order_contractor_base.html", {'orders': orders})        
+
+def delete_order(response, order_id):
+    Order.objects.get(pk=order_id).delete()
+    return redirect("order")
 
 def sign_in(request):
     """

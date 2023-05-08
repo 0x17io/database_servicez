@@ -16,7 +16,7 @@
                             <h5 class="card-title">{{order.ClientID.MainID.FirstName}} {{order.ClientID.MainID.LastName}}</h5>
                             {% comment %} <p class="card-text"> {{order.ServiceID.TypeID.Type}}</p> {% endcomment %}
                             <p class="card-text"> {{order.Timestamp}} </p>
-                            <a href="delete_request" class="btn btn-primary">Delete</a>
+                            <a href="{%  url 'delete_order' order.id %}" class="btn btn-primary">Delete</a>
                           </div>
                         </div>
                         {% endfor %}

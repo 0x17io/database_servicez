@@ -16,4 +16,6 @@ urlpatterns = [
     path("becomeClient/", views.become_client, name="become_client"),
     path("becomeContractor/", views.become_contractor, name="become_contractor"),
     path("searchResults/", views.index, name="search_results"),
+    path("<int:request_id>/delete_request", views.delete_request, name="delete_request"),
+    path("<int:order_id>/delete_order", views.delete_order, name="delete_order"),
 ]

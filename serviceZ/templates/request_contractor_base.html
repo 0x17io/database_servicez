@@ -15,7 +15,7 @@
                           <div class="card-body">
                             <p class="card-text"> {{request.ServiceID.TypeID.Type}}</p>
                             <p class="card-text"> {{request.Timestamp}} </p>
-                            <a href="delete_request" class="btn btn-primary">Delete</a>
+                            <a href="{%  url 'delete_request' request.id %}" class="btn btn-primary">Delete</a>
                           </div>
                         </div>
                         {% endfor %}

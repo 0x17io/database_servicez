@@ -9,13 +9,13 @@
                         <h2 class="mt-0">Client Requests</h2>
                         <hr class="divider" />
                         <p class="text-muted mb-5"></p>
-                        {% if requests %}
-                        {% for request in requests %}
+                        {% if orders %}
+                        {% for order in orders %}
                         <div class="card">
                           <div class="card-body">
-                            <p class="card-text"> {{request.ServiceID.TypeID.Type}}</p>
-                            <p class="card-text"> {{request.Timestamp}} </p>
-                            <a href="delete_request" class="btn btn-primary">Delete</a>
+                            <p class="card-text"> {{order.ServiceID.TypeID.Type}}</p>
+                            <p class="card-text"> {{order.Timestamp}} </p>
+                            <a href="{%  url 'delete_order' order.id %}" class="btn btn-primary">Delete</a>
                           </div>
                         </div>
                         {% endfor %}
