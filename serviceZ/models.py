@@ -49,6 +49,9 @@ class ServiceType (models.Model):
     #TypeID =  models.AutoField(primary_key=True)
     Type = models.CharField(max_length=250)
 
+    def __str__(self):
+        return self.Type
+
     class Meta:
         db_table = "ServiceTypes"
 class Service (models.Model):

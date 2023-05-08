@@ -63,8 +63,11 @@ class BecomeClientForm(forms.Form):
 
 
 class BecomeContractorForm(forms.Form):
-	Job_Menu = forms.ModelChoiceField(queryset=Service.objects.all().values_list('Description', flat=True),
-									  label="Type Of Work Intrested In", to_field_name='Description')
+	service_type_id = forms.ModelChoiceField(queryset=ServiceType.objects.all(),
+									  label="Type Of Work Intrested In")
+	description = forms.CharField(label="description", max_length=200)
+	rate = forms.DecimalField(label="rate", decimal_places=2)
+
 
 class SearchBarForm(forms.Form):
 	searchBar = forms.CharField(label="", max_length=200)

@@ -304,13 +304,15 @@ def addService (request):
             return redirect('account_page')
         else:
             print('Form is not valid')
+            print(form.__dict__)
             messages.error(request, 'Error Processing Your Request')
             context = {'form': form}
             return render(request, 'addServiceType.html', context)
     else:
         form = AddServiceForm
 
-    return render(request, "addServiceType.html", {'content': current_user_data, 'form': form})
+    return redirect('account_page')
+    #return render(request, "addServiceType.html", {'content': current_user_data, 'form': form})
 
 def become_client(request):
     """
@@ -351,8 +353,14 @@ def become_contractor(request):
         form = BecomeContractorForm(request.POST)
 
         if form.is_valid():
-            Contractor.objects.create(MainID=request.user, ServiceID=Service.objects.get(Description=request.POST['Job_Menu']),
-                                      Availability=True)
+
+            #print()
+            Test = Service.objects.create(TypeID=ServiceType.objects.get(id=request.POST['service_type_id']),
+                                   Description=request.POST['service_type_id'],
+                                   Rate=request.POST['rate'])
+
+            Contractor.objects.create(MainID=current_user_data, ServiceID=Service.objects.get(id=Test.id),
+                                        Availability=True)
 
 
             return redirect('account_page')
