@@ -74,4 +74,5 @@ class WriteReviewForm(forms.Form):
 	feedback = forms.CharField(label="Write your feedback.", max_length=200)
 
 class SubmitRequestForm(forms.Form):
+	test = forms.IntegerField(label="just a test", max_value=3)
 	pass

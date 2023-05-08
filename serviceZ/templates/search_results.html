@@ -21,7 +21,7 @@
                             <p class="card-text">Description: {{ value.descr }} </p>
                             <h7 class="card-title">Contractors</h7>
                               {% for cont in value.contractors %}
-                                <p class="card-text">{{ cont }} </p>
+                                <p class="card-text"> {{ cont }} </p>
                               {% endfor %}
                             <p class="card-text"> ${{ value.rate }}/hour</p>
 {#                            <a href="{%  url 'contractor' contractor.id %}" class="btn btn-primary">More info</a>#}
