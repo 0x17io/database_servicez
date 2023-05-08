@@ -18,4 +18,6 @@ urlpatterns = [
     path("searchResults/", views.index, name="search_results"),
     path("<int:request_id>/delete_request", views.delete_request, name="delete_request"),
     path("<int:order_id>/delete_order", views.delete_order, name="delete_order"),
+    path("<int:order_id>/delete_order", views.delete_order, name="delete_order"),
+    path("<int:service_id>/make_request", views.make_request, name="make_request"),
 ]

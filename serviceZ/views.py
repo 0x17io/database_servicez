@@ -7,6 +7,7 @@ from .models import Account, Service, Contractor, Request, Review, Order, Client
 from .forms import RegisterForm, UpdateAccountForm, AddServiceForm, BecomeContractorForm, BecomeClientForm, SearchBarForm, WriteReviewForm
 from django.contrib.auth import authenticate, login
 from django.views.generic import TemplateView, ListView
+import datetime
 
 # Create your views here.
 def index(response):
@@ -165,6 +166,18 @@ def request(response):
 def delete_request(response, request_id):
     Request.objects.get(pk=request_id).delete()
     return redirect("request")       
+
+def make_request(response, service_id):
+    # current_user = Account.objects.get(username=response.user)
+    # client_id = Client.objects.filter(MainID=current_user[0].pk)
+    current_username = Account.objects.filter(username=response.user)
+    print(current_username)
+    client_id = Client.objects.filter(MainID=current_username[0].pk)[0]
+    print(client_id)
+    service_id = Service.objects.filter(id=service_id)[0]
+    r = Request(ClientID=client_id, ServiceID=service_id, Timestamp = datetime.datetime.now())
+    r.save()
+    return redirect("services")
 
 def order(response):
     #if client side list all orders client made
