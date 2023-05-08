@@ -4,7 +4,7 @@ from django.views import generic
 from django.shortcuts import  render, redirect
 from django.contrib import messages
 from .models import Account, Service, Contractor, Request, Review, Order, Client, ServiceType
-from .forms import RegisterForm, UpdateAccountForm, AddServiceForm, BecomeContractorForm, BecomeClientForm, SearchBarForm, WriteReviewForm
+from .forms import RegisterForm, UpdateAccountForm, AddServiceForm, BecomeContractorForm, BecomeClientForm, SearchBarForm, WriteReviewForm, SubmitRequestForm
 from django.contrib.auth import authenticate, login
 from django.views.generic import TemplateView, ListView
 import datetime
@@ -59,6 +59,8 @@ def index(response):
     return render(response, "home_base.html", {'form': form})
 
 class services(generic.ListView):
+    form = RegisterForm()
+
     template_name = "services_base.html"
     context_object_name = "all_contractors"
 
@@ -246,7 +248,7 @@ def helper_function (request):
 
 def load_account(request):
     """
-    Loads account, additinoally allows you to updated the zipcode/language of the user.
+    Loads account, additionally allows you to updated the zipcode/language of the user.
     :param request:
     :return: Account Page
     """
