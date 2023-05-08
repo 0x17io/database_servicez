@@ -10,12 +10,6 @@
                         <p class="text-muted mb-5">List of available services</p>
 
                         {% if all_contractors %}
-                            <form method="post">
-                              {% csrf_token %}
-                                {{ form }}
-                                <button style="margin-top: 2px;" type="submit" class="btn btn-primary w-100">Search</button>
-                          </form>
-
 
 
                         {% for contractor in all_contractors %}
