@@ -311,8 +311,8 @@ def addService (request):
     else:
         form = AddServiceForm
 
-    return redirect('account_page')
-    #return render(request, "addServiceType.html", {'content': current_user_data, 'form': form})
+    #
+    return render(request, "addServiceType.html", {'content': current_user_data, 'form': form})
 
 def become_client(request):
     """
