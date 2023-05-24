@@ -68,6 +68,13 @@ class services(generic.ListView):
         return Contractor.objects.order_by("id")
 
 def contractor(response, contractor_id):
+    """
+    Contractor views
+    :param response:
+    :param contractor_id:
+    :return:
+    """
+
     current_user = response.user
 
     contractor = Contractor.objects.filter(id=contractor_id)
@@ -90,6 +97,11 @@ def contractor(response, contractor_id):
 
 
 def review(response):
+    """
+    List reviews.
+    :param response:
+    :return:
+    """
     test = Account.objects.all()
     return render(response, "review_base.html", {'contents': test})
 
@@ -110,6 +122,11 @@ def add_review(client_id, contractor_id):
 
 
 def register(request):
+    """
+    Register an account.
+    :param request:
+    :return:
+    """
     if request.method == 'GET':
         form = RegisterForm()
         context = {'form': form}
@@ -140,7 +157,11 @@ def register(request):
 
 
 def request(response):
-
+    """
+    Submit a request
+    :param response:
+    :return:
+    """
     #if client side list all requests client made
     client_id=1
     contractor_id=-1
@@ -166,10 +187,22 @@ def request(response):
         return render(response, "request_contractor_base.html", {'requests': requests})        
 
 def delete_request(response, request_id):
+    """
+    Delete request.
+    :param response:
+    :param request_id:
+    :return:
+    """
     Request.objects.get(pk=request_id).delete()
     return redirect("request")       
 
 def make_request(response, service_id):
+    """
+    Make a request.
+    :param response:
+    :param service_id:
+    :return:
+    """
     # current_user = Account.objects.get(username=response.user)
     # client_id = Client.objects.filter(MainID=current_user[0].pk)
     current_username = Account.objects.filter(username=response.user)
@@ -182,6 +215,11 @@ def make_request(response, service_id):
     return redirect("services")
 
 def order(response):
+    """
+    Observe current orders.
+    :param response:
+    :return:
+    """
     #if client side list all orders client made
     client_id=1
     contractor_id=-1
@@ -207,6 +245,12 @@ def order(response):
         return render(response, "order_contractor_base.html", {'orders': orders})        
 
 def delete_order(response, order_id):
+    """
+    Delete order
+    :param response:
+    :param order_id:
+    :return:
+    """
     Order.objects.get(pk=order_id).delete()
     return redirect("order")
 
